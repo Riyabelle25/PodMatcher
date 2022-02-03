@@ -30,7 +30,7 @@ def process_files(req_document,resume_docs):
  
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx'])
-UPLOAD_FOLDER = '/Users/riya'
+UPLOAD_FOLDER = './uploads'
 
 app = Flask(__name__)
 app.secret_key = "secret key"
@@ -84,9 +84,11 @@ def check_for_file():
            result = process_files(req_document,abs_paths)
            print(result)
            response = json.dumps(result)
+           os.remove(req_document)
+           for file_path in abs_paths:
+               os.remove(file_path)
+            
            return response
-        #    for file_path in abs_paths:
-        #        file_utils.delete_file(file_path)
                   
         else:
            flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
