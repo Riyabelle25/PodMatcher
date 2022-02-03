@@ -1,4 +1,5 @@
 import os
+from site import abs_paths
 from urllib import response
 from flask import Flask, flash, request, redirect, render_template,url_for
 import json
@@ -7,19 +8,36 @@ from text_processing import tf_idf_cosine_similarity as tf_idf,doc2vec_compariso
 from text_processing import cv_cosine_similarity as cv
 import os
 
+import firebase_admin
+from firebase_admin import credentials, firestore
+cred = credentials.Certificate("key.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()  # this connects to our Firestore database 
+candidates = []
+
+def fetch_resumes():
+    docs = db.collection(u'Resumes').stream() # opens 'resumes' collection
+    resumes = {}
+    for doc in docs:
+        # print(f'{doc.id} => {doc.to_dict()}')
+        resumes[doc.id] = doc.to_dict()['resume']
+        candidates.append(doc.id)
+    print(resumes)
+    return resumes
+resumes = fetch_resumes()
+
 
 def process_files(req_document,resume_docs):
     
     req_doc_text = txt.get_content_as_string(req_document)
     # print('The start' * 5)
-    resume_doc_text = []
-    for doct in resume_docs:
-        resume_doc_text.append(txt.get_content_as_string(doct))
-
-    print(resume_doc_text)
-    cos_sim_list = tf_idf.get_tf_idf_cosine_similarity(req_doc_text,resume_doc_text)
+    # resume_doc_text = []
+    # for doct in resume_docs:
+    #     resume_doc_text.append(txt.get_content_as_string(doct))
+    print(34,resume_docs)
+    cos_sim_list = tf_idf.get_tf_idf_cosine_similarity(req_doc_text,resume_docs)
     final_doc_rating_list = []
-    zipped_docs = zip(cos_sim_list,resume_docs)
+    zipped_docs = zip(cos_sim_list,candidates)
     sorted_doc_list = sorted(zipped_docs, key = lambda x: x[0], reverse=True)
     for element in sorted_doc_list:
         doc_rating_list = []
@@ -60,33 +78,40 @@ def check_for_file():
         if 'reqFile' not in request.files:
            flash('Requirements document can not be empty')
            return redirect(request.url)
-        if 'resume_files' not in request.files:
-           flash('Select at least one resume File to proceed further')
-           return redirect(request.url)
+        # if 'resume_files' not in request.files:
+        #    flash('Select at least one resume File to proceed further')
+        #    return redirect(request.url)
+
         file = request.files['reqFile']
         if file.filename == '':
            flash('Requirement document has not been selected')
            return redirect(request.url)
-        resume_files = request.files.getlist("resume_files")
-        if len(resume_files) == 0:
-            flash('Select atleast one resume file to proceed further')
-            return redirect(request.url)
-        if ((file and allowed_file(file.filename)) and (len(resume_files) > 0)):
+
+        # resume_files = request.files.getlist("resume_files")
+        # if len(resume_files) == 0:
+        #     flash('Select atleast one resume file to proceed further')
+        #     return redirect(request.url)
+        if ((file and allowed_file(file.filename))): # and (len(resume_files) > 0)
            #filename = secure_filename(file.filename)
            abs_paths = []
            filename = file.filename
            req_document = UPLOAD_FOLDER+'/'+filename
            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-           for resumefile in resume_files:
-               filename = resumefile.filename
-               abs_paths.append(UPLOAD_FOLDER + '/' + filename)
-               resumefile.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+
+        #    for resumefile in resume_files:
+        #        filename = resumefile.filename
+        #        abs_paths.append(UPLOAD_FOLDER + '/' + filename)
+        #        resumefile.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+  
+           for key in resumes:
+               abs_paths.append(resumes[key])
+
            result = process_files(req_document,abs_paths)
            print(result)
            response = json.dumps(result)
            os.remove(req_document)
-           for file_path in abs_paths:
-               os.remove(file_path)
+        #    for file_path in abs_paths:
+        #        os.remove(file_path)
                        
         #    return response
            return render_template("resume_results.html", result=result)
