@@ -4,6 +4,6 @@ __pycache__
 ./preprocessing/__pycache__
 text_processing/__pycache__
 utils/__pycache__
-# key.json
+key.json
 py2
 uploads/
