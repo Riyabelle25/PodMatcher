@@ -69,12 +69,12 @@ class Main extends React.Component {
           <button type="submit" className={styles.matchCandidates}>Match Candidates!</button>
         </div>
         {this.state.set && (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} style={{backgroundColor: 'Transparent', fontWeight: 'bolder' }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">Match</TableCell>
+                  <TableCell style={{fontWeight: 'bolder'}}>Name</TableCell>
+                  <TableCell style={{fontWeight: 'bolder'}} align="right">Match</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -83,10 +83,10 @@ class Main extends React.Component {
                     key={row.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell style={{fontWeight: 'bolder'}} component="th" scope="row">
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.percentage}</TableCell>
+                    <TableCell style={{fontWeight: 'bolder'}} align="right">{row.percentage}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
