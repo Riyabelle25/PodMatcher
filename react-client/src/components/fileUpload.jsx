@@ -31,7 +31,7 @@ class Main extends React.Component {
     let data = new FormData();
     data.append("file", this.uploadInput.files[0]);
 
-    fetch("http://192.168.0.142:4444/api/upload", {
+    fetch("https://pod-matcher.herokuapp.com/api/upload", {
       method: "POST",
       // mode: 'no-cors',
       body: data,
@@ -56,7 +56,7 @@ class Main extends React.Component {
     return (
       <form onSubmit={this.handleUploadImage}>
         <div className={styles.wrapper}>
-          <input
+          <input className={styles.fileInput}
             ref={(ref) => {
               this.uploadInput = ref;
             }}
@@ -65,7 +65,7 @@ class Main extends React.Component {
         </div>
         <br />
         <div>
-          <button>Upload</button>
+          <button type="submit" className={styles.matchCandidates}>Match Candidates!</button>
         </div>
         {this.state.set && (
           <TableContainer component={Paper}>
