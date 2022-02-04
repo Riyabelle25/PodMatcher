@@ -128,7 +128,7 @@ def check_for_file():
         #    for file_path in abs_paths:
         #        os.remove(file_path)
                        
-           return response
+           return "response"
         #    return render_template("resume_results.html", result=result)
                   
         else:

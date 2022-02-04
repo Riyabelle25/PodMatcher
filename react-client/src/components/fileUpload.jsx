@@ -18,12 +18,12 @@ class Main extends React.Component {
     data.append('file', this.uploadInput.files[0]);
     data.append('filename', this.fileName.value);
 
-    fetch('https://podmatcher-server.herokuapp.com/api/upload', {
+    fetch('http://192.168.253.192:4444/api/upload', {
       method: 'POST',
       body: data,
     }).then((response) => {
       response.json().then((body) => {
-        this.setState({ imageURL: `https://podmatcher-server.herokuapp.com/${body.file}` });
+        this.setState({ imageURL: `http://192.168.253.192:4444/${body.file}` });
       });
     });
   }
