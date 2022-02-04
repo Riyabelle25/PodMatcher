@@ -1,12 +1,15 @@
+from distutils.log import debug
 import os
 from site import abs_paths
 from urllib import response
-from flask import Flask, flash, request, redirect, render_template,url_for
+from flask import Flask, flash, request, send_from_directory, redirect, render_template,url_for, jsonify, make_response
+from flask_cors import CORS, cross_origin
 import json
 from preprocessing import docx_processing  as doc, textract_processing as txt
 from text_processing import tf_idf_cosine_similarity as tf_idf,doc2vec_comparison as d2v
 from text_processing import cv_cosine_similarity as cv
 import os
+import logging
 
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -25,6 +28,10 @@ def fetch_resumes():
     print(resumes)
     return resumes
 resumes = fetch_resumes()
+
+logging.basicConfig(level=logging.INFO)
+
+logger = logging.getLogger('HELLO WORLD')
 
 
 def process_files(req_document,resume_docs):
@@ -50,18 +57,24 @@ def process_files(req_document,resume_docs):
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx'])
 UPLOAD_FOLDER = './uploads'
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = 'react-client/build', static_url_path='')
+cors = CORS(app)
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+
+@app.route('/api')
+@cross_origin()
+def Welcome():
+    return "Hello world!!!"
 
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
-def upload_form():
-    return render_template('resume_loader.html')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/failure')
 def failure():
@@ -71,8 +84,10 @@ def failure():
 def success(name):
    return 'Files %s has been selected' %name
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/api/upload', methods=['POST', 'GET'])
 def check_for_file():
+    if request.method == 'GET':
+        print("hey")
     if request.method == 'POST':
         # check if the post request has the file part
         if 'reqFile' not in request.files:
@@ -113,12 +128,14 @@ def check_for_file():
         #    for file_path in abs_paths:
         #        os.remove(file_path)
                        
-        #    return response
-           return render_template("resume_results.html", result=result)
+           return response
+        #    return render_template("resume_results.html", result=result)
                   
         else:
            flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
            return redirect(request.url)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(host="0.0.0.0", port=4444)
+
+# flask_cors.CORS(app, expose_headers='Authorization')
