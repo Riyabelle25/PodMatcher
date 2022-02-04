@@ -56,7 +56,7 @@ def process_files(req_document,resume_docs):
  
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx'])
-UPLOAD_FOLDER = 'C:/Users/Priya/Documents/mlhfellowship/PodMatcher/uploads'
+UPLOAD_FOLDER = './uploads'
 
 app = Flask(__name__, static_folder = 'react-client/build', static_url_path='')
 cors = CORS(app)
@@ -125,14 +125,15 @@ def check_for_file():
            for key in resumes:
                abs_paths.append(resumes[key])
 
-           result = process_files(req_document,abs_paths)
-           print(result)
+           result = {"data": process_files(req_document,abs_paths)}
+           
            response = json.dumps(result)
+           print(response)
            os.remove(req_document)
         #    for file_path in abs_paths:
         #        os.remove(file_path)
-                       
-           return "response"
+
+           return response
         #    return render_template("resume_results.html", result=result)
                   
         else:
