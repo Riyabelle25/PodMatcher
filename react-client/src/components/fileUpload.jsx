@@ -50,6 +50,7 @@ class Main extends React.Component {
         console.log(results);
         this.setState({ answers: answers, set: true });
       });
+
   }
 
   render() {

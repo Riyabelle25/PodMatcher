@@ -58,7 +58,7 @@ def process_files(req_document,resume_docs):
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx'])
 UPLOAD_FOLDER = './uploads'
 
-app = Flask(__name__, static_folder = 'react-client/build', static_url_path='')
+app = Flask(__name__, static_folder = './react-client/build', static_url_path='')
 cors = CORS(app)
 app.secret_key = "secret key"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -143,6 +143,6 @@ def check_for_file():
            return redirect(request.url)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4444, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 # flask_cors.CORS(app, expose_headers='Authorization')
