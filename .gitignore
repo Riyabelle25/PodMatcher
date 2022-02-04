@@ -1,7 +1,9 @@
 venv
+env/
 __pycache__
 ./preprocessing/__pycache__
 text_processing/__pycache__
 utils/__pycache__
 # key.json
 py2
+uploads/

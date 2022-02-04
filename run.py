@@ -36,6 +36,7 @@ logger = logging.getLogger('HELLO WORLD')
 
 def process_files(req_document,resume_docs):
     
+    print(req_document)
     req_doc_text = txt.get_content_as_string(req_document)
     # print('The start' * 5)
     # resume_doc_text = []
@@ -55,7 +56,7 @@ def process_files(req_document,resume_docs):
  
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','docx'])
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = 'C:/Users/Priya/Documents/mlhfellowship/PodMatcher/uploads'
 
 app = Flask(__name__, static_folder = 'react-client/build', static_url_path='')
 cors = CORS(app)
@@ -90,16 +91,19 @@ def check_for_file():
         print("hey")
     if request.method == 'POST':
         # check if the post request has the file part
-        if 'reqFile' not in request.files:
-           flash('Requirements document can not be empty')
-           return redirect(request.url)
+        print(request.files)
+        if 'file' not in request.files:
+           print('Requirements document can not be empty')
+           return json.dumps({'message': 'Requirements document can not be empty'})
         # if 'resume_files' not in request.files:
         #    flash('Select at least one resume File to proceed further')
         #    return redirect(request.url)
 
-        file = request.files['reqFile']
+        file = request.files['file']
         if file.filename == '':
-           flash('Requirement document has not been selected')
+           print('Requirement document has not been selected')
+           return json.dumps({'message': 'Requirement document has not been selected'})
+
            return redirect(request.url)
 
         # resume_files = request.files.getlist("resume_files")
@@ -127,12 +131,14 @@ def check_for_file():
            os.remove(req_document)
         #    for file_path in abs_paths:
         #        os.remove(file_path)
-                       
+           print(response)
            return response
         #    return render_template("resume_results.html", result=result)
                   
         else:
-           flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
+           print('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
+           return json.dumps({'message': 'notvalid'})
+
            return redirect(request.url)
 
 if __name__ == "__main__":

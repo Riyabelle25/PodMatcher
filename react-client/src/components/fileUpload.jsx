@@ -14,16 +14,17 @@ class Main extends React.Component {
   handleUploadImage(ev) {
     ev.preventDefault();
 
-    const data = new FormData();
+    let data = new FormData();
     data.append('file', this.uploadInput.files[0]);
     data.append('filename', this.fileName.value);
 
-    fetch('https://podmatcher-server.herokuapp.com/api/upload', {
+    fetch('http://192.168.0.142:4444/api/upload', {
       method: 'POST',
+      mode: 'no-cors',
       body: data,
     }).then((response) => {
       response.json().then((body) => {
-        this.setState({ imageURL: `https://podmatcher-server.herokuapp.com/${body.file}` });
+        this.setState({ imageURL: `http://192.168.0.142:4444/${body.file}` });
       });
     });
   }
