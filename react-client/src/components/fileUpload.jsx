@@ -69,8 +69,8 @@ class Main extends React.Component {
           <button type="submit" className={styles.matchCandidates}>Match Candidates!</button>
         </div>
         {this.state.set && (
-          <TableContainer component={Paper} style={{backgroundColor: 'Transparent', fontWeight: 'bolder' }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableContainer component={Paper} style={{backgroundColor: 'rgba(3, 249, 241, 0.1)', fontWeight: 'bolder' }}>
+            <Table sx={{ minWidth: 500 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell style={{fontWeight: 'bolder'}}>Name</TableCell>
