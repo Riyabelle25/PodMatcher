@@ -1,8 +1,11 @@
 # POD-MATCHER
 
+## Making life easier at MLH, Matching mentees to their mentors!
+
 
 <img width="1440" alt="Screenshot 2022-02-05 at 2 36 16 AM" src="https://user-images.githubusercontent.com/55790848/152603132-ef9fb46a-ce56-4429-81d4-990819984f08.png">
 
+Check out our App [here](https://pod-matcher.herokuapp.com/)
 
 ## Introduction:
 Recruiters have long found manually scanning resumes to be a time-consuming activity. Once they've combed through and filtered the resumes, they'll have to pair the mentees with a suitable mentor. The inspiration for the PodMatcher comes from the hope to automate this process for MLH in particular, and save time and resources. As part of the submission to the MLH hackathon, we created an application that:
