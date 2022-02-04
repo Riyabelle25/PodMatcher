@@ -17,7 +17,7 @@ class Main extends React.Component {
     let data = new FormData();
     data.append('file', this.uploadInput.files[0]);
 
-    fetch('https://pod-matcher.herokuapp.com:5000/api/upload', {
+    fetch('https://pod-matcher.herokuapp.com/api/upload', {
         method: 'POST',
         // mode: 'no-cors',
         body: data,
