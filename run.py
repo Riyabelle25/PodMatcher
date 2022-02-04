@@ -131,8 +131,8 @@ def check_for_file():
            os.remove(req_document)
         #    for file_path in abs_paths:
         #        os.remove(file_path)
-           print(response)
-           return response
+                       
+           return "response"
         #    return render_template("resume_results.html", result=result)
                   
         else:
@@ -142,6 +142,6 @@ def check_for_file():
            return redirect(request.url)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4444)
+    app.run(host="0.0.0.0", port=4444, debug=True)
 
 # flask_cors.CORS(app, expose_headers='Authorization')

@@ -18,13 +18,13 @@ class Main extends React.Component {
     data.append('file', this.uploadInput.files[0]);
     data.append('filename', this.fileName.value);
 
-    fetch('http://192.168.0.142:4444/api/upload', {
+    fetch('http://192.168.253.192:4444/api/upload', {
       method: 'POST',
       mode: 'no-cors',
       body: data,
     }).then((response) => {
       response.json().then((body) => {
-        this.setState({ imageURL: `http://192.168.0.142:4444/${body.file}` });
+        this.setState({ imageURL: `http://192.168.253.192:4444/${body.file}` });
       });
     });
   }
