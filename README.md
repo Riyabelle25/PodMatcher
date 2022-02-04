@@ -1,6 +1,9 @@
 # POD-MATCHER
 
 
+<img width="1440" alt="Screenshot 2022-02-05 at 2 36 16 AM" src="https://user-images.githubusercontent.com/55790848/152603132-ef9fb46a-ce56-4429-81d4-990819984f08.png">
+
+
 ## Introduction:
 Recruiters have long found manually scanning resumes to be a time-consuming activity. Once they've combed through and filtered the resumes, they'll have to pair the mentees with a suitable mentor. The inspiration for the PodMatcher comes from the hope to automate this process for MLH in particular, and save time and resources. As part of the submission to the MLH hackathon, we created an application that:
 
@@ -9,6 +12,47 @@ Recruiters have long found manually scanning resumes to be a time-consuming acti
 * These requirements are then matched with a set of applications that are stored in the ```firebase DB``` 
 
 * The ranked applications are shown in decreasing order based on how closely they fit the uploaded requirements.
+
+* PodMatcher is built on React therefore responsive across devices!
+
+
+## Team Mates:rocket:
+
+
+* Riya Elizabeth John [@Riyabelle25](https://github.com/Riyabelle25) : ```Flask Backend | API integration | Heroku ``` 
+
+* Deepti Ravi Kumar [@deepti-96](https://github.com/deepti-96) : ```Documentation | NLP```
+
+* Priya Nagda [@pri1311](https://github.com/pri1311) : ```React Frontend```
+
+
+## Project Details:
+
+<img width="1440" alt="Screenshot 2022-02-05 at 2 37 58 AM" src="https://user-images.githubusercontent.com/55790848/152603316-4ffb7509-11f8-424d-bd8e-bf5e0ace7cb3.png">
+
+This project uses:
+
+```bash
+* BoW and TF-IDF vectorizer to convert the text documents into vector form. 
+
+* Cosine similarity as comparison function.
+
+* Textract python library to read word documents.
+
+* Flask, for the NLP tasks and hosting backend server.
+
+* Firebase Firestore for the DB
+
+* React for the Client side
+
+* Heroku to host the application
+
+* Can-Merge utility to determine whether or not a particular pull request can be merged 
+without navigating to the web interface. 
+The GraphQL API of GitHub is used to fetch the latest status of any status checks 
+currently running and determine if the PR should be merged.
+
+```
 
 ## Pre-processing:
 The following pre-processing techniques have been used:
@@ -35,32 +79,5 @@ Here, log is with base ‘e’. By using the above formula, the denominator beco
 ## Cosine similarity:
 To compare vectors, we need a measure that compares their similarity. An example of this would be cosine similarity. A cosine measurement deals with how close two vectors are to each other. It converts the distance between them into a similarity score between 0 and 100 percent based on the cosine angle between them.
 
-## Project Details:
-This project uses:
-
-```
-* BoW and TF-IDF vectorizer to convert the text documents into vector form. 
-
-* Cosine similarity as comparison function.
-
-* Textract python library to read word documents.
-
-* Flask, for the NLP tasks and hosting backend server.
-
-* Firebase Firestore for the DB
-
-* React for the Client side
-
-* Heroku to host the application
-
-* Can-Merge utility to determine whether or not a particular pull request can be merged 
-without navigating to the web interface. 
-The GraphQL API of GitHub is used to fetch the latest status of any status checks 
-currently running and determine if the PR should be merged.
-
-```
-
-To build a Pod, you must first upload the Job Description for that pod in the requirements.txt file, which describes what skill sets, languages, time zones, and other factors the Matcher should consider. When an application is uploaded, the server sends a request to the Firestore database, which retrieves all of the applications, and then uses BoW and TF-IDF for vectorization and cosines similarity for comparison to provide a percentage-wise list of applicants.
-The following is the result of putting all of the above components together:
-
+<img width="1061" alt="can-merge utility 2022-02-04 at 3 30 38 PM" src="https://user-images.githubusercontent.com/55790848/152604272-8dae5ced-e821-4801-a0e1-70ed37f7be40.png">
 
