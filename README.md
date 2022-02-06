@@ -65,8 +65,8 @@ Lexical lemmatization was done using WordNetLemmatizer.
 The process of stemming words in a document to their root form is known as lemmatization. As a result, we can convert all of the verb forms to their root form. As a result, we'll have to compare two documents using absolute words. Working and working, for example, have the same root word work. All of the terms in our page will be transformed to their root form if we use lemmatization.
 
 Documents must be converted into vectors after they have been pre-processed. The Python scikit-learn library offers different methods for vectorization. The following two methods were used: 
-Bag of Words(BoW)
-TF-IDF vectorizer
+1. Bag of Words(BoW)
+2. TF-IDF vectorizer
 
 ## BoW:
 It's a Bag of all the words in a document, as the name implies. If we have more than one document, Bag will include all of the words from all of them. The index is used to refer to each word. Instead of counting the number of times each word appears in BoW, we will simply assume that if a word exists, it is represented as 1, and if it does not, it is represented as 0.
